@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Suchith P · Java Full Stack</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f7fc;
+      color: #1e293b;
+      line-height: 1.55;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    h1, h2, h3, .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    h2 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #0f172a;
+      margin-bottom: 32px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 20px;
+    }
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    /* ----- GLASSMORPHISM NAV (fixed) ----- */
+    .glass-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 60px;
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s;
+    }
+    .glass-nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-nav a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+    .glass-nav .nav-brand {
+      font-weight: 700;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 12px;
+    }
+    .glass-nav .nav-brand i {
+      color: #3b82f6;
+      margin-right: 6px;
+    }
+    @media (max-width: 720px) {
+      .glass-nav {
+        gap: 14px;
+        padding: 8px 16px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 92%;
+        border-radius: 40px;
+        top: 12px;
+      }
+      .glass-nav a {
+        font-size: 0.7rem;
+        white-space: nowrap;
+      }
+    }
+
+    /* ----- HERO (dark blue developer theme) ----- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(145deg, #081423 0%, #0f2f55 45%, #144b8a 100%);
+      color: white;
+      overflow: hidden;
+      padding: 30px;
+      position: relative;
+    }
+    /* Blue glow behind character (static, no animation) */
+    .hero-right {
+      position: relative;
+      text-align: center;
+      flex: 1;
+    }
+    .glow-ring {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0) 75%);
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(30px);
+      z-index: 0;
+    }
+    .hero-right img {
+      position: relative;
+      z-index: 2;
+      width: 400px;
+      max-width: 100%;
+      transition: 0.3s ease;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+      display: block;
+      margin: 0 auto;
+      /* no floating/bouncing */
+    }
+    .hero-right img:hover {
+      transform: scale(1.02);
+    }
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      width: 100%;
+      padding: 20px 0;
+    }
+    .hero-left {
+      flex: 1.1;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(30, 58, 138, 0.5);
+      backdrop-filter: blur(4px);
+      color: #93c5fd;
+      padding: 10px 22px;
+      border-radius: 40px;
+      margin-bottom: 25px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .hero h1 {
+      font-size: 68px;
+      margin-bottom: 12px;
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+    .hero h2 {
+      color: #60a5fa;
+      margin-bottom: 22px;
+      font-weight: 500;
+      font-size: 1.5rem;
+      border-left: none;
+      padding-left: 0;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #dbeafe;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+    .hero-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 38px;
+    }
+    .hero-info span {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 10px 20px;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.85rem;
+      backdrop-filter: blur(2px);
+    }
+    .hero-info i {
+      margin-right: 8px;
+      color: #60a5fa;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-primary, .btn-secondary {
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+      box-shadow: 0 8px 20px -6px #1e3a8a;
+    }
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px #1e3a8a;
+    }
+    .btn-secondary {
+      border: 2px solid #3b82f6;
+      color: white;
+      background: transparent;
+    }
+    .btn-secondary:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+    @media (max-width: 900px) {
+      .hero-container {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 30px;
+      }
+      .hero h1 { font-size: 48px; }
+      .hero p { max-width: 100%; }
+      .hero-info, .hero-buttons { justify-content: center; }
+      .hero-right img { width: 300px; }
+      .glow-ring { width: 320px; height: 320px; }
+    }
+    @media (max-width: 500px) {
+      .hero h1 { font-size: 36px; }
+      .hero-right img { width: 220px; }
+      .glow-ring { width: 260px; height: 260px; }
+    }
+
+    /* ----- FLOATING TECH ICONS (only logos bounce) ----- */
+    .floating-icons {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .floating-icons i {
+      position: absolute;
+      font-size: 2.4rem;
+      color: rgba(255, 255, 255, 0.25);
+      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.25));
+      animation: floatIcon 7s infinite alternate ease-in-out;
+    }
+    /* each icon with different delay & position */
+    .floating-icons i:nth-child(1) { top: 8%; left: 2%; font-size: 2.8rem; color: #f7df1e; animation-duration: 8s; animation-delay: 0s; }
+    .floating-icons i:nth-child(2) { top: 75%; left: 0%; font-size: 3rem; color: #6db33f; animation-duration: 9s; animation-delay: 0.4s; }
+    .floating-icons i:nth-child(3) { top: 20%; right: 2%; font-size: 2.8rem; color: #00758f; animation-duration: 7s; animation-delay: 0.8s; }
+    .floating-icons i:nth-child(4) { bottom: 10%; right: 0%; font-size: 3.2rem; color: #ff6f00; animation-duration: 10s; animation-delay: 0.2s; }
+    .floating-icons i:nth-child(5) { top: 50%; left: -2%; font-size: 2.6rem; color: #764abc; animation-duration: 8.5s; animation-delay: 1.2s; }
+    .floating-icons i:nth-child(6) { bottom: 30%; right: -2%; font-size: 3rem; color: #2496ed; animation-duration: 9.5s; animation-delay: 0.6s; }
+    /* additional icons for Git & React if needed (but we have 6) */
+    @keyframes floatIcon {
+      0% { transform: translateY(-10px) rotate(-6deg) scale(0.95); opacity: 0.7; }
+      100% { transform: translateY(22px) rotate(6deg) scale(1.05); opacity: 1; }
+    }
+
+    /* ----- CARDS & SECTIONS (professional, consistent spacing) ----- */
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid #eef2ff;
+      transition: 0.2s;
+    }
+    .card:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+      padding: 4px 0;
+    }
+    .skill-chip {
+      background: #ffffff;
+      border: 1px solid #e0e7ff;
+      padding: 10px 26px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #1e3a8a;
+      transition: 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .skill-chip i {
+      margin-right: 10px;
+      color: #3b82f6;
+    }
+    .skill-chip:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: scale(1.02);
+    }
+
+    .exp-card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid #eef2ff;
+    }
+    .exp-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .exp-meta {
+      display: flex;
+      gap: 28px;
+      margin: 14px 0 22px;
+      color: #475569;
+      font-size: 0.9rem;
+      border-left: 3px solid #3b82f6;
+      padding-left: 20px;
+    }
+    .exp-meta i {
+      margin-right: 8px;
+      color: #2563eb;
+    }
+    .exp-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+    .exp-list li {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.95rem;
+    }
+    .exp-list li i {
+      color: #3b82f6;
+      margin-top: 3px;
+      width: 18px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 32px;
+    }
+    .project-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+      border: 1px solid #eef2ff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 40px -14px rgba(0,0,0,0.12);
+      border-color: #c7d2fe;
+    }
+    .project-content {
+      padding: 32px;
+      flex: 1;
+    }
+    .project-icon {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      color: #2563eb;
+    }
+    .project-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 16px;
+    }
+    .tech-badge {
+      background: #eef2ff;
+      color: #1e40af;
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: monospace;
+      padding: 5px 14px;
+      border-radius: 30px;
+    }
+    .project-card ul {
+      list-style: none;
+      margin: 14px 0 8px;
+    }
+    .project-card ul li {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .project-card ul li i {
+      color: #3b82f6;
+      font-size: 0.8rem;
+      width: 18px;
+    }
+
+    .certs-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: white;
+      border-radius: 24px;
+      padding: 32px 40px;
+      border: 1px solid #eef2ff;
+    }
+    .cert-item {
+      background: #f8fafc;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .cert-item i {
+      color: #3b82f6;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      background: white;
+      border-radius: 24px;
+      padding: 36px 40px;
+      border: 1px solid #eef2ff;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 6px 4px;
+    }
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      background: #eff6ff;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #2563eb;
+    }
+    .contact-detail p:first-child {
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .contact-detail a, .contact-detail span {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .contact-detail a:hover {
+      color: #1e40af;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 36px 20px;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+      margin-top: 40px;
+    }
+    .inline-code {
+      background: #1e293b;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #60a5fa;
+    }
+    .social-links {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+    }
+    .social-links a {
+      color: #cbd5e1;
+      font-size: 1.3rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      .container { padding: 0 20px; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero h2 { font-size: 1.2rem; }
+      h2 { font-size: 1.6rem; }
+      .card, .exp-card, .certs-container, .contact-grid { padding: 24px 20px; }
+      .project-content { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- GLASSMORPHISM NAV -->
+<nav class="glass-nav">
+  <span class="nav-brand"><i class="fas fa-terminal"></i> suchith.dev</span>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HERO SECTION (static character, bouncing logos) -->
+<section class="hero">
+  <div class="container hero-container">
+    <div class="hero-left">
+      <div class="hero-badge"><i class="fas fa-code"></i> Java Full Stack Developer</div>
+      <h1>Suchith P</h1>
+      <h2>Building Enterprise Applications with Spring Boot</h2>
+      <p>
+        Passionate Java Full Stack Developer with 1+ years of experience
+        developing scalable enterprise web applications using Spring Boot,
+        REST APIs, MySQL, Docker and AWS.
+      </p>
+      <div class="hero-info">
+        <span><i class="fas fa-briefcase"></i> 1+ Years Experience</span>
+        <span><i class="fas fa-server"></i> Spring Boot</span>
+        <span><i class="fas fa-cloud"></i> AWS</span>
+        <span><i class="fab fa-docker"></i> Docker</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary" id="resumeBtn"><i class="fas fa-download"></i> Download Resume</a>
+        <a href="#contact" class="btn-secondary"><i class="fas fa-paper-plane"></i> Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Blue glow ring -->
+      <div class="glow-ring"></div>
+      <!-- Floating tech icons (bouncing) -->
+      <div class="floating-icons">
+        <i class="fab fa-java"></i>
+        <i class="fas fa-leaf"></i>   <!-- Spring -->
+        <i class="fab fa-docker"></i>
+        <i class="fab fa-aws"></i>
+        <i class="fas fa-database"></i> <!-- MySQL -->
+        <i class="fab fa-react"></i>
+        <!-- Git icon added extra -->
+        <i class="fab fa-git-alt" style="top: 65%; right: 5%; font-size: 2.4rem; color: #f05032; animation-duration: 8.2s; animation-delay: 1.0s;"></i>
+      </div>
+      <!-- Character image (static, no bounce) -->
+      <img src="Animated_pic.png" alt="Suchith P - Java Developer">
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT (all sections with consistent spacing) -->
+<main class="container">
+  <section id="about">
+    <h2>// about_me</h2>
+    <div class="card">
+      <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 14px;">
+        <i class="fas fa-quote-left" style="color: #3b82f6; margin-right: 12px;"></i> 
+        I'm <span class="inline-code">Suchith P</span>, a passionate Java Full Stack Developer with deep expertise in building robust, high-performance web applications. 
+        Skilled in <strong>Java, Spring Boot, JSP/Servlets, REST APIs, and SQL databases</strong>. 
+        Proven track record in delivering end-to-end solutions that solve real-world business challenges.
+      </p>
+      <p>
+        Currently expanding expertise in <strong>AWS Cloud, Docker, and DevOps practices</strong> to bridge the gap between development and production excellence. 
+        Known for clean code, problem-solving, and collaborative teamwork in Agile environments.
+      </p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>// tech_stack</h2>
+    <div class="skills-grid">
+      <span class="skill-chip"><i class="fab fa-java"></i> Java</span>
+      <span class="skill-chip"><i class="fas fa-leaf"></i> Spring Boot</span>
+      <span class="skill-chip"><i class="fas fa-microchip"></i> Microservices</span>
+      <span class="skill-chip"><i class="fas fa-plug"></i> REST API</span>
+      <span class="skill-chip"><i class="fas fa-code"></i> JSP / Servlets</span>
+      <span class="skill-chip"><i class="fas fa-database"></i> MySQL / SQL</span>
+      <span class="skill-chip"><i class="fab fa-html5"></i> HTML5 / CSS3</span>
+      <span class="skill-chip"><i class="fab fa-js"></i> JavaScript</span>
+      <span class="skill-chip"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+      <span class="skill-chip"><i class="fab fa-aws"></i> AWS Cloud</span>
+      <span class="skill-chip"><i class="fab fa-docker"></i> Docker</span>
+      <span class="skill-chip"><i class="fab fa-python"></i> Python</span>
+      <span class="skill-chip"><i class="fas fa-tasks"></i> Agile / Scrum</span>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>// experience</h2>
+    <div class="exp-card">
+      <h3>Software Engineer (Full Stack)</h3>
+      <div class="exp-meta">
+        <span><i class="far fa-calendar-alt"></i> 2025 – Present · 1.5+ Years</span>
+        <span><i class="fas fa-building"></i> Gtechnohubb Solutions Pvt. Ltd.</span>
+      </div>
+      <ul class="exp-list">
+        <li><i class="fas fa-check-circle"></i> Architected and developed Java-based enterprise web applications serving 10k+ users with 99.9% uptime.</li>
+        <li><i class="fas fa-check-circle"></i> Built 8+ RESTful microservices using Spring Boot, integrated with MySQL, reducing API latency by 30%.</li>
+        <li><i class="fas fa-check-circle"></i> Led backend optimization for CRUD workflows and complex business logic, enhancing performance by 25%.</li>
+        <li><i class="fas fa-check-circle"></i> Collaborated cross-functionally with frontend and QA teams; adopted Git Flow and Agile methodology.</li>
+        <li><i class="fas fa-check-circle"></i> Deployed applications on AWS cloud and containerized using Docker for seamless development-to-production transition.</li>
+        <li><i class="fas fa-check-circle"></i> Performed code reviews, debugging, and end-to-end testing, ensuring high-quality deliverables.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>// projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-content">
+          <div class="project-icon"><i class="fas fa-users"></i></div>
+          <h3>Employee Management System</h3>
+          <p>Comprehensive HR solution for managing employee records, departments, payroll, and performance metrics.</p>
+          <div class="project-tech"><span class="tech-badge">Java 17</span><span class="tech-badge">Spring Boot</span><span class="tech-badge">MySQL</span><span class="tech-badge">Thymeleaf</span></div>
+          <ul><li><i class="fas fa-angle-right"></i> Employee registration & role-based access</li><li><i class="fas fa-angle-right"></i> Department & salary tracking with analytics</li><li><i class="fas fa-angle-right"></i> Full CRUD + pagination & search filters</li></ul>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-content">
+          <div class="project-icon"><i class="fas fa-store"></i></div>
+          <h3>Vendor Shop Management</h3>
+          <p>Inventory and vendor management platform enabling real-time order tracking, stock alerts, and sales insights.</p>
+          <div class="project-tech"><span class="tech-badge">JSP/Servlets</span><span class="tech-badge">JDBC</span><span class="tech-badge">MySQL</span></div>
+          <ul><li><i class="fas fa-angle-right"></i> Vendor registration & product catalog</li><li><i class="fas fa-angle-right"></i> Automated stock monitoring & low-stock alerts</li><li><i class="fas fa-angle-right"></i> Order processing with invoice generation</li></ul>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-content">
+          <div class="project-icon"><i class="fas fa-bug"></i></div>
+          <h3>Pest Control Service System</h3>
+          <p>End-to-end service booking platform connecting customers with technicians, scheduling jobs and tracking service history.</p>
+          <div class="project-tech"><span class="tech-badge">Spring Boot</span><span class="tech-badge">REST API</span><span class="tech-badge">MySQL</span><span class="tech-badge">JWT</span></div>
+          <ul><li><i class="fas fa-angle-right"></i> Customer dashboard & online booking</li><li><i class="fas fa-angle-right"></i> Automated technician assignment & real-time status</li><li><i class="fas fa-angle-right"></i> Comprehensive service history & feedback module</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <h2>// learning_path</h2>
+    <div class="certs-container">
+      <div class="cert-item"><i class="fab fa-aws"></i> AWS Cloud Practitioner</div>
+      <div class="cert-item"><i class="fas fa-leaf"></i> Spring Boot Microservices</div>
+      <div class="cert-item"><i class="fas fa-database"></i> Advanced SQL & Performance</div>
+      <div class="cert-item"><i class="fab fa-docker"></i> Docker & Kubernetes</div>
+      <div class="cert-item"><i class="fas fa-chart-line"></i> MLOps Fundamentals</div>
+      <div class="cert-item"><i class="fas fa-code-branch"></i> DevOps CI/CD Pipelines</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>// contact</h2>
+    <div class="contact-grid">
+      <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-detail"><p>Email</p><a href="mailto:suchithp0@gmail.com">suchithp0@gmail.com</a></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone-alt"></i></div><div class="contact-detail"><p>Phone</p><span>+91 8088307987</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-detail"><p>Location</p><span>Karnataka, India</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fab fa-github"></i></div><div class="contact-detail"><p>GitHub</p><a href="https://github.com/suchip08">github.com/suchith-dev</a></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fab fa-linkedin-in"></i></div><div class="contact-detail"><p>LinkedIn</p><a href="https://www.linkedin.com/in/suchith-p-b34519297/">Suchith P</a></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fas fa-globe"></i></div><div class="contact-detail"><p>Portfolio</p><a href="#">suchith.dev</a></div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><i class="fas fa-terminal"></i> Suchith P — Java Full Stack Developer  |  <span class="inline-code">clean_code()</span>  |  © 2026</p>
+  <div class="social-links">
+    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+  </div>
+  <p style="margin-top: 16px; font-size: 0.75rem;">Designed with precision • Clean code • Enterprise ready</p>
+</footer>
+
+<script>
+  // Resume download simulation
+  document.getElementById('resumeBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("📄 Professional resume (PDF) would be downloaded here. Includes detailed experience, tech stack, and project portfolio.");
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === "#" || targetId === "") return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
