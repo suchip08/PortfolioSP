@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Suchith P · Java Full Stack</title>
+  <title>Suchith P · Java Full Stack · IT Professional</title>
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ----- RESET & BASE ----- */
+    /* ----- RESET & BASE (professional, IT-oriented) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -46,23 +46,23 @@
       border-bottom: none;
     }
 
-    /* ----- GLASSMORPHISM NAV (fixed) ----- */
+    /* ----- GLASS NAV (fixed, more professional) ----- */
     .glass-nav {
       position: fixed;
       top: 18px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 999;
-      background: rgba(15, 23, 42, 0.55);
+      background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(14px) saturate(180%);
       -webkit-backdrop-filter: blur(14px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 60px;
       padding: 10px 28px;
       display: flex;
       align-items: center;
       gap: 32px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
       transition: all 0.2s;
     }
     .glass-nav a {
@@ -125,7 +125,7 @@
       }
     }
 
-    /* ----- HERO (dark blue developer theme) ----- */
+    /* ----- HERO (enterprise IT, dark blue gradient) ----- */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -292,7 +292,7 @@
       .glow-ring { width: 200px; height: 200px; }
     }
 
-    /* ----- FLOATING TECH ICONS (only logos bounce) ----- */
+    /* ----- FLOATING TECH ICONS (bounce only logos) ----- */
     .floating-icons {
       position: absolute;
       width: 100%;
@@ -321,7 +321,7 @@
       100% { transform: translateY(22px) rotate(6deg) scale(1.05); opacity: 1; }
     }
 
-    /* ----- CARDS & SECTIONS (professional, consistent spacing) ----- */
+    /* ----- CARDS & SECTIONS (professional, clean) ----- */
     .card {
       background: white;
       border-radius: 24px;
@@ -617,7 +617,6 @@
       .social-links a { font-size: 1rem; }
     }
 
-    /* extra container adjustments */
     @media (max-width: 700px) {
       .container { padding: 0 20px; }
       h2 { font-size: 1.6rem; padding-left: 14px; }
@@ -632,7 +631,7 @@
 </head>
 <body>
 
-<!-- GLASSMORPHISM NAV -->
+<!-- GLASS NAV -->
 <nav class="glass-nav">
   <span class="nav-brand"><i class="fas fa-terminal"></i> suchith.dev</span>
   <a href="#about">About</a>
@@ -642,7 +641,7 @@
   <a href="#contact">Contact</a>
 </nav>
 
-<!-- HERO SECTION (static character, bouncing logos) -->
+<!-- HERO SECTION -->
 <section class="hero">
   <div class="container hero-container">
     <div class="hero-left">
@@ -668,9 +667,7 @@
       </div>
     </div>
     <div class="hero-right">
-      <!-- Blue glow ring -->
       <div class="glow-ring"></div>
-      <!-- Floating tech icons (bouncing) -->
       <div class="floating-icons">
         <i class="fab fa-java"></i>
         <i class="fas fa-leaf"></i>   <!-- Spring -->
@@ -680,13 +677,12 @@
         <i class="fab fa-react"></i>
         <i class="fab fa-git-alt"></i>
       </div>
-      <!-- Character image (static) -->
       <img src="Animated_pic.png" alt="Suchith P - Java Developer">
     </div>
   </div>
 </section>
 
-<!-- MAIN CONTENT (all sections with consistent spacing) -->
+<!-- MAIN CONTENT -->
 <main class="container">
   <section id="about">
     <h2>// about_me</h2>
@@ -812,12 +808,6 @@
 </footer>
 
 <script>
-  // Resume download fallback (if button used)
-  document.querySelector('.btn-primary')?.addEventListener('click', function(e) {
-    // allow default download
-  });
-
-  // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const targetId = this.getAttribute('href');
