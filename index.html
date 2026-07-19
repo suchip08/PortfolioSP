@@ -97,10 +97,31 @@
         width: 92%;
         border-radius: 40px;
         top: 12px;
+        justify-content: center;
       }
       .glass-nav a {
         font-size: 0.7rem;
         white-space: nowrap;
+        padding: 2px 4px;
+      }
+      .glass-nav .nav-brand {
+        font-size: 0.75rem;
+        margin-right: 6px;
+      }
+    }
+    @media (max-width: 480px) {
+      .glass-nav {
+        gap: 8px;
+        padding: 6px 12px;
+        width: 96%;
+        top: 8px;
+        border-radius: 30px;
+      }
+      .glass-nav a {
+        font-size: 0.6rem;
+      }
+      .glass-nav .nav-brand {
+        font-size: 0.65rem;
       }
     }
 
@@ -115,7 +136,6 @@
       padding: 30px;
       position: relative;
     }
-    /* Blue glow behind character (static, no animation) */
     .hero-right {
       position: relative;
       text-align: center;
@@ -143,7 +163,6 @@
       filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
       display: block;
       margin: 0 auto;
-      /* no floating/bouncing */
     }
     .hero-right img:hover {
       transform: scale(1.02);
@@ -257,10 +276,20 @@
       .hero-right img { width: 300px; }
       .glow-ring { width: 320px; height: 320px; }
     }
-    @media (max-width: 500px) {
-      .hero h1 { font-size: 36px; }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 38px; }
+      .hero h2 { font-size: 1.2rem; }
       .hero-right img { width: 220px; }
       .glow-ring { width: 260px; height: 260px; }
+      .hero-badge { font-size: 0.75rem; padding: 6px 14px; }
+      .hero-info span { font-size: 0.7rem; padding: 6px 12px; }
+      .btn-primary, .btn-secondary { padding: 10px 20px; font-size: 0.8rem; }
+      .hero p { font-size: 0.95rem; }
+    }
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 30px; }
+      .hero-right img { width: 180px; }
+      .glow-ring { width: 200px; height: 200px; }
     }
 
     /* ----- FLOATING TECH ICONS (only logos bounce) ----- */
@@ -280,14 +309,13 @@
       filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.25));
       animation: floatIcon 7s infinite alternate ease-in-out;
     }
-    /* each icon with different delay & position */
     .floating-icons i:nth-child(1) { top: 8%; left: 2%; font-size: 2.8rem; color: #f7df1e; animation-duration: 8s; animation-delay: 0s; }
     .floating-icons i:nth-child(2) { top: 75%; left: 0%; font-size: 3rem; color: #6db33f; animation-duration: 9s; animation-delay: 0.4s; }
     .floating-icons i:nth-child(3) { top: 20%; right: 2%; font-size: 2.8rem; color: #00758f; animation-duration: 7s; animation-delay: 0.8s; }
     .floating-icons i:nth-child(4) { bottom: 10%; right: 0%; font-size: 3.2rem; color: #ff6f00; animation-duration: 10s; animation-delay: 0.2s; }
     .floating-icons i:nth-child(5) { top: 50%; left: -2%; font-size: 2.6rem; color: #764abc; animation-duration: 8.5s; animation-delay: 1.2s; }
     .floating-icons i:nth-child(6) { bottom: 30%; right: -2%; font-size: 3rem; color: #2496ed; animation-duration: 9.5s; animation-delay: 0.6s; }
-    /* additional icons for Git & React if needed (but we have 6) */
+    .floating-icons i:nth-child(7) { top: 65%; right: 5%; font-size: 2.4rem; color: #f05032; animation-duration: 8.2s; animation-delay: 1.0s; }
     @keyframes floatIcon {
       0% { transform: translateY(-10px) rotate(-6deg) scale(0.95); opacity: 0.7; }
       100% { transform: translateY(22px) rotate(6deg) scale(1.05); opacity: 1; }
@@ -336,6 +364,15 @@
       background: #eff6ff;
       transform: scale(1.02);
     }
+    @media (max-width: 600px) {
+      .skill-chip {
+        padding: 6px 14px;
+        font-size: 0.7rem;
+      }
+      .skill-chip i {
+        margin-right: 6px;
+      }
+    }
 
     .exp-card {
       background: white;
@@ -359,6 +396,7 @@
       font-size: 0.9rem;
       border-left: 3px solid #3b82f6;
       padding-left: 20px;
+      flex-wrap: wrap;
     }
     .exp-meta i {
       margin-right: 8px;
@@ -379,6 +417,12 @@
       color: #3b82f6;
       margin-top: 3px;
       width: 18px;
+    }
+    @media (max-width: 600px) {
+      .exp-card { padding: 24px 18px; }
+      .exp-card h3 { font-size: 1.2rem; }
+      .exp-meta { gap: 12px; font-size: 0.8rem; padding-left: 12px; }
+      .exp-list li { font-size: 0.85rem; }
     }
 
     .project-grid {
@@ -449,6 +493,11 @@
       font-size: 0.8rem;
       width: 18px;
     }
+    @media (max-width: 700px) {
+      .project-grid { grid-template-columns: 1fr; }
+      .project-content { padding: 24px; }
+      .project-card h3 { font-size: 1.2rem; }
+    }
 
     .certs-container {
       display: flex;
@@ -472,6 +521,10 @@
     }
     .cert-item i {
       color: #3b82f6;
+    }
+    @media (max-width: 600px) {
+      .certs-container { padding: 20px 16px; gap: 10px; }
+      .cert-item { font-size: 0.7rem; padding: 6px 14px; gap: 8px; }
     }
 
     .contact-grid {
@@ -499,6 +552,7 @@
       justify-content: center;
       font-size: 1.4rem;
       color: #2563eb;
+      flex-shrink: 0;
     }
     .contact-detail p:first-child {
       font-weight: 600;
@@ -517,6 +571,12 @@
     .contact-detail a:hover {
       color: #1e40af;
       text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .contact-grid { padding: 20px 16px; gap: 16px; grid-template-columns: 1fr; }
+      .contact-item { gap: 12px; }
+      .contact-icon { width: 42px; height: 42px; font-size: 1.2rem; }
+      .contact-detail a, .contact-detail span { font-size: 0.85rem; }
     }
 
     footer {
@@ -541,6 +601,7 @@
       display: flex;
       justify-content: center;
       gap: 32px;
+      flex-wrap: wrap;
     }
     .social-links a {
       color: #cbd5e1;
@@ -550,14 +611,22 @@
     .social-links a:hover {
       color: white;
     }
+    @media (max-width: 480px) {
+      footer { padding: 24px 16px; font-size: 0.7rem; }
+      .social-links { gap: 20px; }
+      .social-links a { font-size: 1rem; }
+    }
 
+    /* extra container adjustments */
     @media (max-width: 700px) {
       .container { padding: 0 20px; }
-      .hero h1 { font-size: 2.5rem; }
-      .hero h2 { font-size: 1.2rem; }
-      h2 { font-size: 1.6rem; }
-      .card, .exp-card, .certs-container, .contact-grid { padding: 24px 20px; }
-      .project-content { padding: 24px; }
+      h2 { font-size: 1.6rem; padding-left: 14px; }
+      .card { padding: 24px 20px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 14px; }
+      h2 { font-size: 1.3rem; padding-left: 10px; margin-bottom: 20px; }
+      section { padding: 40px 0; }
     }
   </style>
 </head>
@@ -592,9 +661,9 @@
         <span><i class="fab fa-docker"></i> Docker</span>
       </div>
       <div class="hero-buttons">
-       <a href="SuchithP.pdf" download="SuchithP.pdf" class="btn-primary">
-    <i class="fas fa-download"></i> Download Resume
-</a>
+        <a href="SuchithP.pdf" download="SuchithP.pdf" class="btn-primary">
+          <i class="fas fa-download"></i> Download Resume
+        </a>
         <a href="#contact" class="btn-secondary"><i class="fas fa-paper-plane"></i> Contact Me</a>
       </div>
     </div>
@@ -609,10 +678,9 @@
         <i class="fab fa-aws"></i>
         <i class="fas fa-database"></i> <!-- MySQL -->
         <i class="fab fa-react"></i>
-        <!-- Git icon added extra -->
-        <i class="fab fa-git-alt" style="top: 65%; right: 5%; font-size: 2.4rem; color: #f05032; animation-duration: 8.2s; animation-delay: 1.0s;"></i>
+        <i class="fab fa-git-alt"></i>
       </div>
-      <!-- Character image (static, no bounce) -->
+      <!-- Character image (static) -->
       <img src="Animated_pic.png" alt="Suchith P - Java Developer">
     </div>
   </div>
@@ -744,10 +812,9 @@
 </footer>
 
 <script>
-  // Resume download simulation
-  document.getElementById('resumeBtn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert("📄 Professional resume (PDF) would be downloaded here. Includes detailed experience, tech stack, and project portfolio.");
+  // Resume download fallback (if button used)
+  document.querySelector('.btn-primary')?.addEventListener('click', function(e) {
+    // allow default download
   });
 
   // Smooth scroll for anchor links
